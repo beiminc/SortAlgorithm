@@ -325,12 +325,210 @@ graph TB;
 
 ```mermaid
 graph TB;
-1[3] --> 2[5]
-2[5] --> 1[3]
-3[1]
+1[3] 
+2[5] --> 3[1]
+3[1] --> 2[5]
 4[7]
 5[4]
 6[6]
 7[2]
 ```
+
+```mermaid
+graph TB;
+1[3] --> 2[1]
+2[1] --> 1[3]
+3[5] 
+4[7]
+5[4]
+6[6]
+7[2]
+```
+
+```mermaid
+graph TB;
+1[1]
+2[3] 
+3[5] 
+4[7]
+5[4]
+6[6]
+7[2]
+```
+
+> > step 2:
+
+```mermaid
+graph TB;
+1[1]
+2[3] 
+3[5] 
+4[7] --> 5[4]
+5[4] --> 4[7]
+6[6]
+7[2]
+```
+
+```mermaid
+graph TB;
+1[1]
+2[3] 
+3[5] --> 4[4]
+4[4] --> 3[5]
+5[7]
+6[6]
+7[2]
+```
+
+```mermaid
+graph TB;
+1[1]
+2[3] 
+3[4] 
+4[5]
+5[7]
+6[6]
+7[2]
+```
+
+
+
+> > step N:
+
+```mermaid
+graph TB;
+1[1] -.-> 7[2]
+2[3] -.-> 7[2]
+3[4] -.-> 7[2]
+4[5] -.-> 7[2]
+5[6] -.-> 7[2]
+6[7] -.-> 7[2]
+7[2]
+```
+
+```mermaid
+graph TB;
+1
+2
+3
+4
+5
+6
+7
+
+```
+
+> **Code:**
+
+> > **python:**
+
+```python
+def insertion_sort(a):
+    k =0
+    for i in range(1, len(a)):
+        if(a[i]<a[i-1]):
+            k = k+1
+            for j in range(i, 0, -1):
+                if(a[j] < a[j-1]):
+                    a[j-1], a[j] = a[j], a[j-1]
+            print("after %d change: "%k, a)
+    return a
+
+def main():
+    Array = list(map(int,input("please input the array(split by space):").split()))
+    print("input is: ", Array)
+    SortedArray = insertion_sort(Array)
+    print("result is: ", SortedArray)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+> > **C++:**
+
+```C++
+#include <iostream>
+#include <stdlib.h>
+#include <vector>
+
+using namespace std;
+
+void print_array(auto array)
+{
+    for(int i : array)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+}
+
+void insertion_sort(auto &array)
+{
+    auto len = array.size();
+    int k = 0;
+    for (int i = 1; i < len; i++)
+    {
+        if (array[i] < array[i-1])
+        {
+            for (int j = i; j > 0; j--)
+            {
+                if (array[j] < array[j-1])
+                {
+                    auto temp = array[j-1];
+                    array[j-1] = array[j];
+                    array[j] = temp;
+                }
+            }
+            cout << "after " << ++k << " change: ";
+            print_array(array);
+        }
+    }
+}
+
+int main()
+{  
+    vector<int> array;
+    char ch;
+    cout << "please input the array(split by space):";
+    while((ch = cin.get()) != '\n')
+    {
+        if(ch != ' ')
+            array.push_back(int(ch - '0'));
+    }
+    cout << "origin is: " ;
+    print_array(array);
+
+    insertion_sort(array);
+    cout << "result is: " ;
+    print_array(array);
+
+    system("pause");
+    return 0;
+}
+```
+
+> **result:**
+
+```
+please input the array(split by space):3 5 4 1 7 6
+input is:  [3, 5, 4, 1, 7, 6]
+after 1 change:  [3, 4, 5, 1, 7, 6]
+after 2 change:  [1, 3, 4, 5, 7, 6]
+after 3 change:  [1, 3, 4, 5, 6, 7]
+result is:  [1, 3, 4, 5, 6, 7]
+```
+
+> > **复杂度：**
+
+- 若数组的长度是N（不重复 ），则时间复杂度：
+
+  1. 平均：N*N/4 次比较，N*N/4次交换
+  2. 最好：N-1次比较，0次交换
+  3. 最坏：N*N/2次比较， N*N/2次交换
+
+- 特点：
+
+  若数据倒置的数量很少时，速度快。
 
