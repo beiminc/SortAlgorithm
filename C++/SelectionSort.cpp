@@ -42,12 +42,23 @@ int main()
 {  
     vector<int> array;
     char ch;
+    int num = 0;
     cout << "please input the array(split by space):";
     while((ch = cin.get()) != '\n')
     {
         if(ch != ' ')
-            array.push_back(int(ch - '0'));
+        {
+            num = num * 10 + int(ch - '0');
+        }    
+        else if(ch == ' ')
+        {
+            array.push_back(num);
+            num = 0;
+        }
+            
     }
+    
+    array.push_back(num);
     cout << "origin is: " ;
     print_array(array);
 

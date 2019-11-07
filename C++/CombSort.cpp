@@ -41,6 +41,33 @@ void bubble_sort(auto &array)
     }
 }
 
+void comb_sort(auto &array)
+{
+    auto len = array.size();
+    auto step = len;
+    auto k = 0;
+    while((step/=1.3) > 1)
+    {
+        for (int i = 0; i < len - step; i++)
+        {
+            if(array[i] > array[i+step])
+            {
+                int temp = array[i];
+                array[i] = array[i+step];
+                array[i+step] = temp;
+            }
+        }
+
+        cout << "after " << ++k << " change: ";
+        print_array(array);
+    }
+
+    cout << "before bubble: ";
+    print_array(array);
+
+    bubble_sort(array);
+}
+
 int main()
 {  
     vector<int> array;
@@ -60,13 +87,13 @@ int main()
         }
             
     }
-    
+
     array.push_back(num);
 
     cout << "origin is: " ;
     print_array(array);
 
-    bubble_sort(array);
+    comb_sort(array);
     cout << "result is: " ;
     print_array(array);
 

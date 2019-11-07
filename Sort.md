@@ -532,3 +532,359 @@ result is:  [1, 3, 4, 5, 6, 7]
 
   若数据倒置的数量很少时，速度快。
 
+
+
+## 冒泡排序
+
+> **原理：**
+
+ 冒泡排序的原理就是小的数字慢慢的往上浮。从数组最后面开始循环，如果一个数比它前面数小，则交换两者位置。 
+
+```mermaid
+graph TB;
+  1[3]
+  2[5]
+  3[1]
+  4[7]
+  5[4]
+  6[6]
+  7[2]
+```
+
+> > step 1:
+
+```mermaid
+graph TB;
+1[3]
+2[5]
+3[1]
+4[7]
+5[4]
+6[6] --> 7
+7[2] --> 6
+```
+
+```mermaid
+graph TB;
+1[3]
+2[5]
+3[1]
+4[7]
+5[4] --> 6
+6[2] --> 5
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[3]
+2[5]
+3[1]
+4[7] --> 5
+5[2] --> 4
+6[4] 
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[3]
+2[5]
+3[1] --> 4
+4[2] --> 3
+5[7] 
+6[4] 
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[3]
+2[5] --> 3
+3[1] --> 2
+4[2]
+5[7] 
+6[4] 
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[3] --> 2
+2[1] --> 1
+3[5] 
+4[2]
+5[7] 
+6[4] 
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1] 
+2[3] 
+3[5] 
+4[2]
+5[7] 
+6[4] 
+7[6]
+```
+
+> > step 2:
+
+```mermaid
+graph TB;
+1[1] 
+2[3] 
+3[5] 
+4[2]
+5[7] 
+6[4] --> 7
+7[6] --> 6
+```
+
+```mermaid
+graph TB;
+1[1] 
+2[3] 
+3[5] 
+4[2]
+5[7] --> 6
+6[4] --> 5
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1] 
+2[3] 
+3[5] 
+4[2] --> 5
+5[4] --> 4
+6[7]
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1] 
+2[3] 
+3[5] --> 4
+4[2] --> 3
+5[4] 
+6[7]
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1] 
+2[3] --> 3
+3[2] --> 2
+4[5] 
+5[4] 
+6[7]
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1] --> 2
+2[2] --> 1
+3[3]
+4[5] 
+5[4] 
+6[7]
+7[6] 
+```
+
+```mermaid
+graph TB;
+1[1]
+2[2] 
+3[3]
+4[5] 
+5[4] 
+6[7]
+7[6] 
+```
+
+> > step 3:
+
+```mermaid
+graph TB;
+1[1]
+2[2] 
+3[3]
+4[5] 
+5[4] 
+6[7] --> 7
+7[6] --> 6
+```
+
+```mermaid
+graph TB;
+1[1]
+2[2] 
+3[3]
+4[5] 
+5[4] --> 6
+6[6] --> 5
+7[7] 
+```
+
+```mermaid
+graph TB;
+1[1]
+2[2] 
+3[3]
+4[5] --> 5
+5[4] --> 4
+6[6]
+7[7] 
+```
+
+```mermaid
+graph TB;
+1[1]
+2[2] 
+3[3]
+4[4]
+5[5] 
+6[6]
+7[7] 
+```
+
+> **Code:**
+
+```python
+def bubble_sort_ascended(a):
+    k =0
+    for i in range(0, len(a)):
+        flag = False
+        k = k + 1
+        for j in range(len(a)-1, i, -1):
+            if(a[j] < a[j-1]):
+                flag = True
+                a[j], a[j-1] = a[j-1], a[j]
+        if(not flag):
+            break
+        print("after %d change: "%k, a)
+    return a
+
+def bubble_sort_dascended(a):
+    k =0
+    for i in range(0, len(a)):
+        flag = False
+        k = k + 1
+        for j in range(len(a)-1, i, -1):
+            if(a[j] > a[j-1]):
+                flag = True
+                a[j], a[j-1] = a[j-1], a[j]
+        if(not flag):
+            break
+        print("after %d change: "%k, a)
+    return a
+
+def main():
+    Array = list(map(int,input("please input the array(split by space):").split()))
+    print("input is: ", Array)
+    SortedArrayAscend = bubble_sort_ascended(Array)
+    print("ascend result is: ", SortedArrayAscend)
+
+    SortedArrayDascend = bubble_sort_dascended(Array)
+    print("dascend result is: ", SortedArrayDascend)
+
+if __name__ == "__main__":
+    main()
+```
+
+```C++
+#include <iostream>
+#include <stdlib.h>
+#include <vector>
+
+using namespace std;
+
+void print_array(auto array)
+{
+    for(int i : array)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+}
+
+void bubble_sort(auto &array)
+{
+    auto len = array.size();
+    int k = 0;
+    for (int i = 0; i < len; i++)
+    {
+        bool flag = false;
+        for (int j = len - 1; j > i; j--)
+        {
+            if (array[j] < array[j-1])
+            {
+                flag = true;
+                auto temp = array[j-1];
+                array[j-1] = array[j];
+                array[j] = temp;
+            }
+        }
+        
+        if(not flag)
+        {
+            break;
+        }
+
+        cout << "after " << ++k << " change: ";
+        print_array(array);
+    }
+}
+
+int main()
+{  
+    vector<int> array;
+    char ch;
+    cout << "please input the array(split by space):";
+    while((ch = cin.get()) != '\n')
+    {
+        if(ch != ' ')
+            array.push_back(int(ch - '0'));
+    }
+    cout << "origin is: " ;
+    print_array(array);
+
+    bubble_sort(array);
+    cout << "result is: " ;
+    print_array(array);
+
+    system("pause");
+    return 0;
+}
+```
+
+> **result:**
+
+```
+please input the array(split by space):3 5 1 7 4 6 2
+input is:  [3, 5, 1, 7, 4, 6, 2]
+after 1 change:  [1, 3, 5, 2, 7, 4, 6]
+after 2 change:  [1, 2, 3, 5, 4, 7, 6]
+after 3 change:  [1, 2, 3, 4, 5, 6, 7]
+ascend result is:  [1, 2, 3, 4, 5, 6, 7]
+```
+
+> **复杂度：**
+
+- 若数组的长度是N（不重复 ），则时间复杂度：
+
+  1. 平均：N*N/4 次比较，N*N/4次交换
+  2. 最好：N-1次比较，0次交换
+  3. 最坏：N*N/2次比较， N*N/2次交换
+
+- 特点：
+
+  若数据倒置的数量很少时，速度快。
+

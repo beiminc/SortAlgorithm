@@ -14,6 +14,24 @@ def bubble_sort_ascended(a):
         print("after %d change: "%k, a)
     return a
 
+def comb_sort_ascended(a):
+    step = len(a)
+    t = 0
+    while (step > 1):
+        t = t + 1
+        k = int(step)
+        for i in range(0, len(a)-k):
+            if(a[i] > a[i+k]):
+                a[i], a[i+k] = a[i+k], a[i]
+        step = step/1.3
+        print("after %d comb change: "%t, a)
+    
+    print("before bubble: ", a)
+
+    bubble_sort_ascended(a)
+    return a
+
+
 def bubble_sort_dascended(a):
     k =0
     for i in range(0, len(a)):
@@ -28,14 +46,31 @@ def bubble_sort_dascended(a):
         print("after %d change: "%k, a)
     return a
 
+def comb_sort_dascended(a):
+    step = len(a)
+    t = 0
+    while (step > 1):
+        t = t + 1
+        k = int(step)
+        for i in range(0, len(a)-k):
+            if(a[i] < a[i+k]):
+                a[i], a[i+k] = a[i+k], a[i]
+        step = step/1.3
+        print("after %d comb change: "%t, a)
+    
+    print("before bubble: ", a)
+
+    bubble_sort_dascended(a)
+    return a
+
 def main():
     start = datetime.datetime.now()
     Array = list(map(int,input("please input the array(split by space):").split()))
     print("input is: ", Array)
-    SortedArrayAscend = bubble_sort_ascended(Array)
+    SortedArrayAscend = comb_sort_ascended(Array)
     print("ascend result is: ", SortedArrayAscend)
 
-    SortedArrayDascend = bubble_sort_dascended(Array)
+    SortedArrayDascend = comb_sort_dascended(Array)
     print("dascend result is: ", SortedArrayDascend)
     end = datetime.datetime.now()
     print(end - start)
